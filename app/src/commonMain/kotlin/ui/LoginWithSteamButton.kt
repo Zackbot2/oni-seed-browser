@@ -86,18 +86,18 @@ fun LoginWithSteamButton(
 
         DefaultSpacer()
 
-        Icon(
-            imageVector = IconSteam,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier
-                .halfPadding()
-                .size(24.dp)
-        )
-
-        HalfSpacer()
-
         if (connectedUserId == null) {
+
+            Icon(
+                imageVector = IconSteam,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .halfPadding()
+                    .size(24.dp)
+            )
+
+            HalfSpacer()
 
             Text(
                 text = stringResource(Res.string.uiLoginWithSteam),
@@ -124,7 +124,7 @@ fun LoginWithSteamButton(
         } else {
 
             Text(
-                text = stringResource(Res.string.uiConnected),
+                text = stringResource(Res.string.uiProfile),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,

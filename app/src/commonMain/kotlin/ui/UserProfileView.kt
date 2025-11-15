@@ -67,14 +67,13 @@ import ui.theme.lightGray
 private val contributorListFontSize = 20.sp
 
 // REQUIREMENTS:
-// move the username change to the profile page
 // - clicking a username should bring you to their profile page (unless anonymous)
 // - show user position as sticky
 
 
 @OptIn(ExperimentalTime::class)
 @Composable
-fun LeaderboardViewList(
+fun UserProfileView(
     steamIdToUsernameMap: Map<String, String>,
     errorMessage: MutableState<String?>
 ) {
