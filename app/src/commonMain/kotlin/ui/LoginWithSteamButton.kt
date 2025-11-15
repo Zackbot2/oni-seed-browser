@@ -55,7 +55,8 @@ private const val PUBLIC_LOGIN_URL: String =
 @Composable
 fun LoginWithSteamButton(
     connectedUserId: String?,
-    localPort: Int?
+    localPort: Int?,
+    onOpenProfile: ((String) -> Unit)? = null
 ) {
 
     val hovered = remember { mutableStateOf(false) }
@@ -75,13 +76,14 @@ fun LoginWithSteamButton(
             )
             .noRippleClickable {
 
-                if (connectedUserId != null)
-                    return@noRippleClickable
-
-                if (localPort == null)
-                    uriHandler.openUri(PUBLIC_LOGIN_URL)
-                else
-                    uriHandler.openUri(LOGIN_BASE_URL + "http://localhost:$localPort")
+                if (connectedUserId != null) {
+                    onOpenProfile?.invoke(connectedUserId)
+                } else {
+                    if (localPort == null)
+                        uriHandler.openUri(PUBLIC_LOGIN_URL)
+                    else
+                        uriHandler.openUri(LOGIN_BASE_URL + "http://localhost:$localPort")
+                }
             }
     ) {
 
@@ -100,8 +102,7 @@ fun LoginWithSteamButton(
 
         if (connectedUserId == null) {
             Text(
-                //text = stringResource(Res.string.uiLoginWithSteam),
-                text = localPort.toString(),
+                text = stringResource(Res.string.uiLoginWithSteam),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -125,8 +126,7 @@ fun LoginWithSteamButton(
         } else {
 
             Text(
-                //text = stringResource(Res.string.uiProfile),
-                text = localPort.toString(),
+                text = stringResource(Res.string.uiProfile),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,

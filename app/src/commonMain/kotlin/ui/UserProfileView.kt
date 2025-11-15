@@ -74,8 +74,7 @@ private val contributorListFontSize = 20.sp
 @OptIn(ExperimentalTime::class)
 @Composable
 fun UserProfileView(
-    steamIdToUsernameMap: Map<String, String>,
-    errorMessage: MutableState<String?>
+    connectedUserId : String
 ) {
 
     val contributorsState = produceState(emptyList()) {
@@ -95,8 +94,6 @@ fun UserProfileView(
         } catch (ex: Exception) {
 
             ex.printStackTrace()
-
-            errorMessage.value = ex.stackTraceToString()
         }
     }
 
@@ -180,77 +177,5 @@ fun UserProfileView(
 
         val lazyListState = rememberLazyListState()
 
-        Box {
-
-            LazyColumn(
-                state = lazyListState,
-                verticalArrangement = Arrangement.spacedBy(doubleSpacing),
-                modifier = Modifier.padding(doubleSpacing)
-            ) {
-
-                itemsIndexed(contributors) { index, entry ->
-
-                    val rank = index + 1
-
-                    Row {
-
-                        FillSpacer()
-
-                        Text(
-                            text = rank.toString(),
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontSize = contributorListFontSize,
-                            color = lightGray,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier
-                                .width(48.dp)
-                                .background(
-                                    Color.Black,
-                                    defaultRoundedCornerShape
-                                )
-                        )
-
-                        DoubleSpacer()
-
-                        val name = steamIdToUsernameMap[entry.first] ?: "Anonymous"
-
-                        Text(
-                            text = name,
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontSize = contributorListFontSize,
-                            color = if (name == "Anonymous")
-                                lightGray.copy(0.3F)
-                            else
-                                lightGray,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.width(160.dp)
-                        )
-
-                        DoubleSpacer()
-
-                        Text(
-                            text = entry.second.toString(),
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontSize = contributorListFontSize,
-                            color = lightGray,
-                            textAlign = TextAlign.End,
-                            modifier = Modifier.width(70.dp)
-                        )
-
-                        FillSpacer()
-                    }
-                }
-            }
-
-            VerticalScrollbar(
-                adapter = rememberScrollbarAdapter(lazyListState),
-                modifier = Modifier.fillMaxHeight().align(Alignment.CenterEnd),
-                style = defaultScrollbarStyle().copy(
-                    unhoverColor = lightGray.copy(alpha = 0.4f),
-                    hoverColor = lightGray
-                )
-            )
-        }
     }
 }

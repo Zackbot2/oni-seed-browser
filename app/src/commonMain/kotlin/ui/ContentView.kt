@@ -93,7 +93,7 @@ fun ContentView(
      */
     writeToClipboard: (String) -> Unit
 ) {
-    
+
     val errorMessage = remember { mutableStateOf<String?>(null) }
 
     val steamIdToUsernameMap = produceState(emptyMap()) {
@@ -182,6 +182,7 @@ fun ContentView(
 
         val showFavorites = remember { mutableStateOf(false) }
         val showLeaderboard = remember { mutableStateOf(false) }
+        val showUserProfile = remember { mutableStateOf<String?>(null) }
 
         val likeCounts: MutableState<Map<String, Int>?> = remember { mutableStateOf(null) }
 
@@ -319,7 +320,10 @@ fun ContentView(
                                     showFavorites.value = !showFavorites.value
 
                                     if (showFavorites.value)
+                                    {
                                         showLeaderboard.value = false
+                                        showUserProfile.value = null
+                                    }
                                 }
                         )
                     }
@@ -340,7 +344,12 @@ fun ContentView(
                     if (connectedUserId != null || !isMniEmbedded)
                         LoginWithSteamButton(
                             connectedUserId = connectedUserId,
-                            localPort = localPort
+                            localPort = localPort,
+                            onOpenProfile = { userId ->
+                                showUserProfile.value = userId
+                                showLeaderboard.value = false
+                                showFavorites.value = false
+                            }
                         )
 
                     DoubleSpacer()
@@ -480,6 +489,16 @@ fun ContentView(
                         }
 
                         DoubleSpacer()
+                    }
+
+                } else if (showUserProfile.value != null) {
+
+                    Box(
+                        modifier = Modifier.weight(1F)
+                    ) {
+                        UserProfileView(
+                            connectedUserId = showUserProfile.value!!
+                        )
                     }
 
                 } else if (showFavorites.value) {

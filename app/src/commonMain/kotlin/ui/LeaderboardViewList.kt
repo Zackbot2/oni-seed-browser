@@ -128,7 +128,7 @@ fun LeaderboardViewList(
             textAlign = TextAlign.Center,
             modifier = Modifier
                 .defaultPadding()
-                .width(800.dp)
+                .width(400.dp)
         )
 
         DefaultSpacer()
