@@ -93,7 +93,7 @@ fun ContentView(
      */
     writeToClipboard: (String) -> Unit
 ) {
-
+    
     val errorMessage = remember { mutableStateOf<String?>(null) }
 
     val steamIdToUsernameMap = produceState(emptyMap()) {

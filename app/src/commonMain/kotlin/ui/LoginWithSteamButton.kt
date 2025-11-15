@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import io.github.stefanoltmann.app.generated.resources.Res
 import io.github.stefanoltmann.app.generated.resources.uiConnected
 import io.github.stefanoltmann.app.generated.resources.uiLoginWithSteam
+import io.github.stefanoltmann.app.generated.resources.uiProfile
 import org.jetbrains.compose.resources.stringResource
 import ui.icons.IconSteam
 import ui.theme.DefaultSpacer
@@ -86,21 +87,21 @@ fun LoginWithSteamButton(
 
         DefaultSpacer()
 
+        Icon(
+            imageVector = IconSteam,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier
+                .halfPadding()
+                .size(24.dp)
+        )
+
+        HalfSpacer()
+
         if (connectedUserId == null) {
-
-            Icon(
-                imageVector = IconSteam,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier
-                    .halfPadding()
-                    .size(24.dp)
-            )
-
-            HalfSpacer()
-
             Text(
-                text = stringResource(Res.string.uiLoginWithSteam),
+                //text = stringResource(Res.string.uiLoginWithSteam),
+                text = localPort.toString(),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
@@ -124,7 +125,8 @@ fun LoginWithSteamButton(
         } else {
 
             Text(
-                text = stringResource(Res.string.uiProfile),
+                //text = stringResource(Res.string.uiProfile),
+                text = localPort.toString(),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
