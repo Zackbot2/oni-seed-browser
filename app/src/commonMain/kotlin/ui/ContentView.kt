@@ -299,7 +299,11 @@ fun ContentView(
                                 showLeaderboard.value = !showLeaderboard.value
 
                                 if (showLeaderboard.value)
+                                {
                                     showFavorites.value = false
+                                    showUserProfile.value = null
+                                }
+
                             }
                     )
 
@@ -389,6 +393,18 @@ fun ContentView(
                         LeaderboardViewList(
                             steamIdToUsernameMap = steamIdToUsernameMap.value,
                             errorMessage = errorMessage
+                        )
+                    }
+
+                } else if (showUserProfile.value != null) {
+
+                    Box(modifier = Modifier.weight(1F))
+                    {
+                        UserProfileView(
+                            steamIdToUsernameMap = steamIdToUsernameMap.value,
+                            errorMessage = errorMessage,
+                            userIdToView = showUserProfile.value!!,
+                            connectedUserId = showUserProfile.value
                         )
                     }
 
@@ -489,16 +505,6 @@ fun ContentView(
                         }
 
                         DoubleSpacer()
-                    }
-
-                } else if (showUserProfile.value != null) {
-
-                    Box(
-                        modifier = Modifier.weight(1F)
-                    ) {
-                        UserProfileView(
-                            connectedUserId = showUserProfile.value!!
-                        )
                     }
 
                 } else if (showFavorites.value) {
